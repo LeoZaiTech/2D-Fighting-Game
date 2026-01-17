@@ -1,16 +1,16 @@
-[gd_scene load_steps=14 format=3 uid="uid://player_character"]
+[gd_scene load_steps=15 format=3 uid="uid://byrujkojtgf2r"]
 
-[ext_resource type="Script" path="res://scripts/characters/player/player_character.gd" id="1_player"]
-[ext_resource type="Script" path="res://scripts/state_machine/state_machine.gd" id="2_sm"]
-[ext_resource type="Script" path="res://scripts/characters/player/states/idle_state.gd" id="3_idle"]
-[ext_resource type="Script" path="res://scripts/characters/player/states/walk_state.gd" id="4_walk"]
-[ext_resource type="Script" path="res://scripts/characters/player/states/jump_state.gd" id="5_jump"]
-[ext_resource type="Script" path="res://scripts/characters/player/states/light_attack_state.gd" id="6_attack"]
-[ext_resource type="Script" path="res://scripts/characters/player/states/hitstun_state.gd" id="7_hitstun"]
-[ext_resource type="Script" path="res://scripts/combat/hitbox.gd" id="8_hitbox"]
-[ext_resource type="Script" path="res://scripts/combat/hurtbox.gd" id="9_hurtbox"]
-[ext_resource type="Script" path="res://scripts/characters/character_animator.gd" id="10_animator"]
-[ext_resource type="Texture2D" uid="uid://placeholder_sprite" path="res://assets/sprites/placeholder.svg" id="11_sprite"]
+[ext_resource type="Script" uid="uid://cvmeyij5fi8t4" path="res://scripts/characters/player/player_character.gd" id="1_player"]
+[ext_resource type="Texture2D" uid="uid://d2wlpmkobsnbv" path="res://assets/sprites/Custom _ Edited - Mega Man X Customs - X - X (Street Fighter Moves, Extended).png" id="2_djydg"]
+[ext_resource type="Script" uid="uid://vqy4syc1w3qw" path="res://scripts/state_machine/state_machine.gd" id="2_sm"]
+[ext_resource type="Script" uid="uid://dkokkp8ig2tgl" path="res://scripts/characters/player/states/idle_state.gd" id="3_idle"]
+[ext_resource type="Script" uid="uid://cqx4fbgt8usa3" path="res://scripts/characters/player/states/walk_state.gd" id="4_walk"]
+[ext_resource type="Script" uid="uid://wyd2awte7dbl" path="res://scripts/characters/player/states/jump_state.gd" id="5_jump"]
+[ext_resource type="Script" uid="uid://02la177y3355" path="res://scripts/characters/player/states/light_attack_state.gd" id="6_attack"]
+[ext_resource type="Script" uid="uid://v10qrx0byw06" path="res://scripts/characters/player/states/hitstun_state.gd" id="7_hitstun"]
+[ext_resource type="Script" uid="uid://b4qsumqnok0gb" path="res://scripts/combat/hitbox.gd" id="8_hitbox"]
+[ext_resource type="Script" uid="uid://sfajfilcnkm" path="res://scripts/combat/hurtbox.gd" id="9_hurtbox"]
+[ext_resource type="Script" uid="uid://b60xp412iiy22" path="res://scripts/characters/character_animator.gd" id="10_animator"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
 size = Vector2(40, 80)
@@ -28,7 +28,9 @@ script = ExtResource("1_player")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -48)
 scale = Vector2(2, 2)
-texture = ExtResource("11_sprite")
+texture = ExtResource("2_djydg")
+region_enabled = true
+region_rect = Rect2(5.222683, 0, 38, 40.833553)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -40)
@@ -36,9 +38,8 @@ shape = SubResource("RectangleShape2D_body")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
-[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+[node name="StateMachine" type="Node" parent="."]
 script = ExtResource("2_sm")
-initial_state = NodePath("Idle")
 
 [node name="Idle" type="Node" parent="StateMachine"]
 script = ExtResource("3_idle")
