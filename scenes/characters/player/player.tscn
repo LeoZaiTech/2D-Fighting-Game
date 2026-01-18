@@ -1,7 +1,7 @@
-[gd_scene load_steps=15 format=3 uid="uid://byrujkojtgf2r"]
+[gd_scene load_steps=17 format=3 uid="uid://byrujkojtgf2r"]
 
 [ext_resource type="Script" uid="uid://cvmeyij5fi8t4" path="res://scripts/characters/player/player_character.gd" id="1_player"]
-[ext_resource type="Texture2D" uid="uid://d2wlpmkobsnbv" path="res://assets/sprites/Custom _ Edited - Mega Man X Customs - X - X (Street Fighter Moves, Extended).png" id="2_djydg"]
+[ext_resource type="Texture2D" uid="uid://dvn13ksdcsj7c" path="res://assets/sprites/Megan Sprite Sheet Updated.png" id="2_djydg"]
 [ext_resource type="Script" uid="uid://vqy4syc1w3qw" path="res://scripts/state_machine/state_machine.gd" id="2_sm"]
 [ext_resource type="Script" uid="uid://dkokkp8ig2tgl" path="res://scripts/characters/player/states/idle_state.gd" id="3_idle"]
 [ext_resource type="Script" uid="uid://cqx4fbgt8usa3" path="res://scripts/characters/player/states/walk_state.gd" id="4_walk"]
@@ -11,6 +11,25 @@
 [ext_resource type="Script" uid="uid://b4qsumqnok0gb" path="res://scripts/combat/hitbox.gd" id="8_hitbox"]
 [ext_resource type="Script" uid="uid://sfajfilcnkm" path="res://scripts/combat/hurtbox.gd" id="9_hurtbox"]
 [ext_resource type="Script" uid="uid://b60xp412iiy22" path="res://scripts/characters/character_animator.gd" id="10_animator"]
+
+[sub_resource type="Shader" id="Shader_remove_white"]
+code = "shader_type canvas_item;
+
+uniform float threshold : hint_range(0.0, 1.0) = 0.9;
+
+void fragment() {
+    vec4 tex_color = texture(TEXTURE, UV);
+    float brightness = (tex_color.r + tex_color.g + tex_color.b) / 3.0;
+    if (brightness > threshold && tex_color.r > threshold && tex_color.g > threshold && tex_color.b > threshold) {
+        COLOR = vec4(0.0, 0.0, 0.0, 0.0);
+    } else {
+        COLOR = tex_color;
+    }
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sprite"]
+shader = SubResource("Shader_remove_white")
+shader_parameter/threshold = 0.9
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
 size = Vector2(40, 80)
@@ -26,11 +45,12 @@ collision_layer = 2
 script = ExtResource("1_player")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_sprite")
 position = Vector2(0, -48)
-scale = Vector2(2, 2)
+scale = Vector2(4, 4)
 texture = ExtResource("2_djydg")
 region_enabled = true
-region_rect = Rect2(5.222683, 0, 38, 40.833553)
+region_rect = Rect2(323.31232, 26.518478, 39.82489, 42.36689)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -40)
