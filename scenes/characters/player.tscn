@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dlhl6yi7ifdxu"]
 
-[ext_resource type="Texture2D" uid="uid://d2wlpmkobsnbv" path="res://assets/sprites/Custom _ Edited - Mega Man X Customs - X - X (Street Fighter Moves, Extended).png" id="1_rp718"]
+[ext_resource type="Texture2D" uid="uid://cb4e0ci5y7vjh" path="res://assets/sprites/Custom _ Edited - Street Fighter Customs - Ryu - Ryu (SF1 Design, Street Fighter Alpha 3-Style).png" id="1_rp718"]
 
 [node name="Player" type="Node2D"]
 
@@ -9,4 +9,4 @@ scale = Vector2(2, 2)
 texture = ExtResource("1_rp718")
 centered = false
 region_enabled = true
-region_rect = Rect2(10.555557, 0, 31.555557, 39.666668)
+region_rect = Rect2(168, 8, 40, 104)

@@ -1,18 +1,40 @@
-[gd_scene load_steps=17 format=3 uid="uid://debrqh5ploqhk"]
+[gd_scene load_steps=22 format=3 uid="uid://d3siyci1x0vae"]
 
 [ext_resource type="Script" uid="uid://cvmeyij5fi8t4" path="res://scripts/characters/player/player_character.gd" id="1_player"]
-[ext_resource type="Script" uid="uid://csmscript0001" path="res://scripts/state_machine/state_machine.gd" id="2_sm"]
-[ext_resource type="Script" uid="uid://cidlestate001" path="res://scripts/characters/player/states/idle_state.gd" id="3_idle"]
-[ext_resource type="Script" uid="uid://cwalkstate001" path="res://scripts/characters/player/states/walk_state.gd" id="4_walk"]
-[ext_resource type="Script" uid="uid://cjumpstate001" path="res://scripts/characters/player/states/jump_state.gd" id="5_jump"]
-[ext_resource type="Script" uid="uid://clatkstate01" path="res://scripts/characters/player/states/light_attack_state.gd" id="6_latk"]
-[ext_resource type="Script" uid="uid://chitstunst01" path="res://scripts/characters/player/states/hitstun_state.gd" id="7_hitstun"]
-[ext_resource type="Script" uid="uid://chitboxscr01" path="res://scripts/combat/hitbox.gd" id="8_hitbox"]
-[ext_resource type="Script" uid="uid://churtboxsc01" path="res://scripts/combat/hurtbox.gd" id="9_hurtbox"]
-[ext_resource type="Script" uid="uid://ccharanim001" path="res://scripts/characters/character_animator.gd" id="10_anim"]
+[ext_resource type="Texture2D" uid="uid://cb4e0ci5y7vjh" path="res://assets/sprites/Custom _ Edited - Street Fighter Customs - Ryu - Ryu (SF1 Design, Street Fighter Alpha 3-Style).png" id="2_ryu"]
+[ext_resource type="Script" uid="uid://vqy4syc1w3qw" path="res://scripts/state_machine/state_machine.gd" id="2_sm"]
+[ext_resource type="Script" uid="uid://dkokkp8ig2tgl" path="res://scripts/characters/player/states/idle_state.gd" id="3_idle"]
+[ext_resource type="Script" uid="uid://cqx4fbgt8usa3" path="res://scripts/characters/player/states/walk_state.gd" id="4_walk"]
+[ext_resource type="Script" uid="uid://wyd2awte7dbl" path="res://scripts/characters/player/states/jump_state.gd" id="5_jump"]
+[ext_resource type="Script" uid="uid://02la177y3355" path="res://scripts/characters/player/states/light_attack_state.gd" id="6_attack"]
+[ext_resource type="Script" uid="uid://v10qrx0byw06" path="res://scripts/characters/player/states/hitstun_state.gd" id="7_hitstun"]
+[ext_resource type="Script" uid="uid://b4qsumqnok0gb" path="res://scripts/combat/hitbox.gd" id="8_hitbox"]
+[ext_resource type="Script" uid="uid://sfajfilcnkm" path="res://scripts/combat/hurtbox.gd" id="9_hurtbox"]
+[ext_resource type="Script" uid="uid://b60xp412iiy22" path="res://scripts/characters/character_animator.gd" id="10_animator"]
+
+[sub_resource type="Shader" id="Shader_remove_bg"]
+code = "shader_type canvas_item;
+
+uniform float threshold : hint_range(0.0, 1.0) = 0.9;
+
+void fragment() {
+    vec4 tex_color = texture(TEXTURE, UV);
+    float brightness = (tex_color.r + tex_color.g + tex_color.b) / 3.0;
+    if (brightness > threshold && tex_color.r > threshold && tex_color.g > threshold && tex_color.b > threshold) {
+        COLOR = vec4(0.0, 0.0, 0.0, 0.0);
+    } else if (tex_color.r > 0.8 && tex_color.g < 0.3 && tex_color.b > 0.8) {
+        COLOR = vec4(0.0, 0.0, 0.0, 0.0);
+    } else {
+        COLOR = tex_color;
+    }
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sprite"]
+shader = SubResource("Shader_remove_bg")
+shader_parameter/threshold = 0.9
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
-size = Vector2(40, 80)
+size = Vector2(50, 100)
 
 [sub_resource type="Animation" id="Animation_reset"]
 length = 0.001
@@ -26,12 +48,12 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Rect2(0, 0, 64, 64)]
+"values": [Rect2(168, 8, 40, 104)]
 }
 
 [sub_resource type="Animation" id="Animation_idle"]
 resource_name = "idle"
-length = 0.001
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -42,24 +64,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Rect2(0, 0, 64, 64)]
-}
-
-[sub_resource type="Animation" id="Animation_walk"]
-resource_name = "walk"
-length = 1.0
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:region_rect")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [Rect2(0, 0, 64, 64), Rect2(64, 0, 64, 64)]
+"values": [Rect2(168, 8, 40, 104)]
 }
 
 [sub_resource type="Animation" id="Animation_jump"]
@@ -74,10 +79,27 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Rect2(0, 0, 64, 64)]
+"values": [Rect2(168, 8, 40, 104)]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_p2"]
+[sub_resource type="Animation" id="Animation_walk"]
+resource_name = "walk"
+length = 0.7
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Rect2(168, 8, 40, 104), Rect2(216, 8, 48, 104), Rect2(272, 8, 64, 104), Rect2(336, 8, 72, 104), Rect2(416, 8, 56, 104), Rect2(472, 8, 72, 104), Rect2(544, 8, 80, 104)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ryu"]
 _data = {
 &"RESET": SubResource("Animation_reset"),
 &"idle": SubResource("Animation_idle"),
@@ -89,55 +111,58 @@ _data = {
 size = Vector2(60, 40)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hurtbox"]
-size = Vector2(30, 70)
+size = Vector2(50, 90)
 
 [node name="Player2" type="CharacterBody2D"]
+collision_layer = 2
 script = ExtResource("1_player")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-modulate = Color(0.5, 0.8, 1, 1)
-position = Vector2(0, -80)
-scale = Vector2(4, 4)
+material = SubResource("ShaderMaterial_sprite")
+position = Vector2(0, -156)
+scale = Vector2(3, 3)
+texture = ExtResource("2_ryu")
 region_enabled = true
-region_rect = Rect2(0, 0, 64, 64)
+region_rect = Rect2(168, 8, 40, 104)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -40)
+position = Vector2(0, -50)
 shape = SubResource("RectangleShape2D_body")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-&"": SubResource("AnimationLibrary_p2")
+&"": SubResource("AnimationLibrary_ryu")
 }
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource("2_sm")
 
-[node name="IdleState" type="Node" parent="StateMachine"]
+[node name="Idle" type="Node" parent="StateMachine"]
 script = ExtResource("3_idle")
 
-[node name="WalkState" type="Node" parent="StateMachine"]
+[node name="Walk" type="Node" parent="StateMachine"]
 script = ExtResource("4_walk")
 
-[node name="JumpState" type="Node" parent="StateMachine"]
+[node name="Jump" type="Node" parent="StateMachine"]
 script = ExtResource("5_jump")
 
-[node name="LightAttackState" type="Node" parent="StateMachine"]
-script = ExtResource("6_latk")
+[node name="Light_Attack" type="Node" parent="StateMachine"]
+script = ExtResource("6_attack")
 
-[node name="HitstunState" type="Node" parent="StateMachine"]
+[node name="Hitstun" type="Node" parent="StateMachine"]
 script = ExtResource("7_hitstun")
 
 [node name="Hitbox" type="Area2D" parent="."]
 collision_layer = 8
 collision_mask = 16
 monitoring = false
+monitorable = false
 script = ExtResource("8_hitbox")
 
 [node name="HitboxShape" type="CollisionShape2D" parent="Hitbox"]
 position = Vector2(50, -40)
-disabled = true
 shape = SubResource("RectangleShape2D_hitbox")
+disabled = true
 
 [node name="Hurtbox" type="Area2D" parent="."]
 collision_layer = 16
@@ -145,8 +170,11 @@ collision_mask = 8
 script = ExtResource("9_hurtbox")
 
 [node name="HurtboxShape" type="CollisionShape2D" parent="Hurtbox"]
-position = Vector2(0, -40)
+position = Vector2(0, -45)
 shape = SubResource("RectangleShape2D_hurtbox")
 
-[node name="CharacterAnimator" type="Node" parent="."]
-script = ExtResource("10_anim")
+[node name="CharacterAnimator" type="Node" parent="." node_paths=PackedStringArray("sprite", "animation_player", "hitbox")]
+script = ExtResource("10_animator")
+sprite = NodePath("../Sprite2D")
+animation_player = NodePath("../AnimationPlayer")
+hitbox = NodePath("../Hitbox")
