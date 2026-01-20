@@ -29,7 +29,7 @@ offset_bottom = 20.0
 color = Color(0.3, 0.3, 0.35, 1)
 
 [node name="Player" parent="." instance=ExtResource("1_player")]
-position = Vector2(300, 660)
+position = Vector2(300, 620)
 
 [node name="Dummy" parent="." instance=ExtResource("2_dummy")]
 position = Vector2(900, 660)
