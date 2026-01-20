@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://d3siyci1x0vae"]
+[gd_scene load_steps=24 format=3 uid="uid://d3siyci1x0vae"]
 
 [ext_resource type="Script" uid="uid://cvmeyij5fi8t4" path="res://scripts/characters/player/player_character.gd" id="1_player"]
 [ext_resource type="Texture2D" uid="uid://cb4e0ci5y7vjh" path="res://assets/sprites/Custom _ Edited - Street Fighter Customs - Ryu - Ryu (SF1 Design, Street Fighter Alpha 3-Style).png" id="2_ryu"]
@@ -79,7 +79,39 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Rect2(168, 8, 40, 104)]
+"values": [Rect2(24, 576, 72, 120)]
+}
+
+[sub_resource type="Animation" id="Animation_2l1wu"]
+resource_name = "light_attack"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Rect2(264, 288, 128, 104)]
+}
+
+[sub_resource type="Animation" id="Animation_light_attack_2"]
+resource_name = "light_attack_2"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Rect2(416, 288, 88, 104), Rect2(512, 288, 120, 104)]
 }
 
 [sub_resource type="Animation" id="Animation_walk"]
@@ -104,6 +136,8 @@ _data = {
 &"RESET": SubResource("Animation_reset"),
 &"idle": SubResource("Animation_idle"),
 &"jump": SubResource("Animation_jump"),
+&"light_attack": SubResource("Animation_2l1wu"),
+&"light_attack_2": SubResource("Animation_light_attack_2"),
 &"walk": SubResource("Animation_walk")
 }
 
