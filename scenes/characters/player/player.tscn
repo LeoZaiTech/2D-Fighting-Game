@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://byrujkojtgf2r"]
+[gd_scene load_steps=20 format=3 uid="uid://byrujkojtgf2r"]
 
 [ext_resource type="Script" uid="uid://cvmeyij5fi8t4" path="res://scripts/characters/player/player_character.gd" id="1_player"]
 [ext_resource type="Texture2D" uid="uid://dvn13ksdcsj7c" path="res://assets/sprites/Megan Sprite Sheet Updated.png" id="2_djydg"]
@@ -34,6 +34,44 @@ shader_parameter/threshold = 0.9
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
 size = Vector2(40, 80)
 
+[sub_resource type="Animation" id="Animation_bsn6e"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Rect2(17, 171, 37, 40)]
+}
+
+[sub_resource type="Animation" id="Animation_djydg"]
+resource_name = "walk"
+length = 1.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Rect2(85.831726, 167.19507, 30.359436, 45.33853), Rect2(176, 168, 48, 40)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_blysn"]
+_data = {
+&"RESET": SubResource("Animation_bsn6e"),
+&"walk": SubResource("Animation_djydg")
+}
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hitbox"]
 size = Vector2(60, 40)
 
@@ -50,13 +88,16 @@ position = Vector2(0, -48)
 scale = Vector2(4, 4)
 texture = ExtResource("2_djydg")
 region_enabled = true
-region_rect = Rect2(323.31232, 26.518478, 39.82489, 42.36689)
+region_rect = Rect2(17, 171, 37, 40)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -40)
 shape = SubResource("RectangleShape2D_body")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_blysn")
+}
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource("2_sm")
