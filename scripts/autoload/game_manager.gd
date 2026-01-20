@@ -11,6 +11,15 @@ var current_state: GameState = GameState.PLAYING
 var player_character: Node = null
 var training_dummy: Node = null
 
+# Character selection
+var selected_character: String = "megaman"
+
+# Character scene paths
+var character_scenes: Dictionary = {
+	"megaman": "res://scenes/characters/player/player.tscn",
+	"ryu": "res://scenes/characters/player2/player2.tscn"
+}
+
 # Frame counter for deterministic combat
 var frame_count: int = 0
 

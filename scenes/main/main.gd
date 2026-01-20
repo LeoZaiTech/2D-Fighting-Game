@@ -3,14 +3,33 @@ extends Node2D
 ## Handles debug display and scene management
 
 @onready var debug_label: Label = $UI/DebugLabel
-@onready var player: PlayerCharacter = $Player
 @onready var dummy: TrainingDummy = $Dummy
+@onready var player_spawn: Marker2D = $PlayerSpawn
+
+var player: BaseCharacter = null
 
 func _ready() -> void:
+	_spawn_selected_character()
+	
 	# Make player face the dummy
 	if player and dummy:
 		player.face_opponent(dummy.global_position)
 		dummy.face_opponent(player.global_position)
+
+func _spawn_selected_character() -> void:
+	var char_path = GameManager.character_scenes.get(GameManager.selected_character, "")
+	if char_path.is_empty():
+		char_path = "res://scenes/characters/player/player.tscn"
+	
+	var char_scene = load(char_path)
+	if char_scene:
+		player = char_scene.instantiate()
+		add_child(player)
+		if player_spawn:
+			player.global_position = player_spawn.global_position
+		else:
+			player.global_position = Vector2(300, 620)
+		GameManager.register_player(player)
 
 func _process(_delta: float) -> void:
 	_update_debug_display()
