@@ -64,13 +64,11 @@ func _create_jump_animation() -> void:
 	anim.length = 0.5
 	anim.loop_mode = Animation.LOOP_NONE
 	
-	# Placeholder: stretch effect
+	# Use same idle frame for jump (no scale changes)
 	if sprite:
 		var track = anim.add_track(Animation.TYPE_VALUE)
-		anim.track_set_path(track, "Sprite2D:scale")
-		anim.track_insert_key(track, 0.0, Vector2(2, 2))
-		anim.track_insert_key(track, 0.1, Vector2(1.8, 2.3))
-		anim.track_insert_key(track, 0.5, Vector2(2, 2))
+		anim.track_set_path(track, "Sprite2D:region_rect")
+		anim.track_insert_key(track, 0.0, Rect2(17, 171, 37, 40))
 	
 	_add_animation("jump", anim)
 
